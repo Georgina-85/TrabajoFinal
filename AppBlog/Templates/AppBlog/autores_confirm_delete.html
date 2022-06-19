@@ -1,0 +1,9 @@
+{% extends "AppBlog/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h1>Estos son los autores de las recetas del blog</h1>
+<form method="POST">{% csrf_token %}
+  <p>Estás seguro de eliminar el autor del post"{{object}}"</p>
+  <input type="submit" value="SI">
+</form>
+{% endblock %}

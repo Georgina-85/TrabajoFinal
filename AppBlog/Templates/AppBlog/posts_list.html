@@ -1,0 +1,26 @@
+{% extends "AppBlog/padre.html" %}
+{% load static %}
+{% block contenidoQueCambia %}
+<h1>Este es el listado de Recetas</h1>
+{% for post in object_list %} <!-- object_list es una lista de posts -->
+<br>
+<br>
+<li>{{post}}</li>
+
+
+<button>
+  <a href="{% url 'posts_detalle' post.id %}">Detalle</a>
+</button>
+<button>
+  <a href="{% url 'posts_editar' post.id%}">Editar</a>
+</button>
+<button>
+  <a href="{% url 'posts_borrar' post.id %}">Borrar</a>
+</button>
+{% endfor %}
+<br>
+<br>
+<button>
+  <a href="{% url 'posts_crear' %}">Crear</a>
+</button>
+{% endblock %}
