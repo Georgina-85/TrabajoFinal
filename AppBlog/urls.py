@@ -5,8 +5,12 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
+
 urlpatterns = [
-  path('',Inicio.as_view(), name = 'inicio'),
+  #path('', Inicio.as_view(), name = 'inicio'),
+  path('', views.inicio, name = 'inicio'),
   path('posts/', PostsList.as_view(), name='posts_lista'),
   path('posts/<pk>', PostDetail.as_view(), name='posts_detalle'),
   path('posts/editar/<pk>', PostUpdate.as_view(), name='posts_editar'),
@@ -20,14 +24,23 @@ urlpatterns = [
   path('autores/borrar/<pk>', AutoresDelete.as_view(), name='autores_borrar'),
 
   path('nosotras/',views.nosotras, name = 'nosotras'),
+ 
+  path('login', views.login_request, name = 'Login'),
+  path('registro', views.registro, name = 'Registro'),
+  path('logout', LogoutView.as_view(template_name='AppBlog/logout.html'), name = 'Logout'),
 
-  path('login', login_request, name = "Login"),
-  path('registro', registro, name = "Registro"),
-  #path('logout', LogoutView.as_view(), name = "Logout"),
+  path('editarPerfil', views.editarPerfil, name = "editarPerfil"),
+  
 
-  path('editarPerfil', editarPerfil, name = "editarPerfil"),
+]
 
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+else:
+        urlpatterns += staticfiles_urlpatterns()        
+
+
 
    
-

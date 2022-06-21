@@ -6,3 +6,4 @@ from AppBlog.models import *
 admin.site.register(Posts)
 admin.site.register(Autores)
 admin.site.register(Avatar)
+#admin.site.register(Imagen)

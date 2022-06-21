@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import *
 
 class PostsFormulario(forms.Form):
 
@@ -10,12 +11,24 @@ class PostsFormulario(forms.Form):
     autor = forms.CharField(max_length=40)
     fecha = forms.DateField()
     imagen = forms.ImageField()
+    class Meta: #Esto es para que el formulario sepa que campos tiene que mostrar
+      model = Posts
+      fields = ['titulo', 'subtitulo', 'cuerpo', 'autor', 'fecha', 'imagen']
 
 class AutoresFormulario(forms.Form):   
     nombre= forms.CharField(max_length=30)
     apellido= forms.CharField(max_length=30)
     email= forms.EmailField()    
     imagen = forms.ImageField()
+    class Meta: #Esto es para que el formulario sepa que campos tiene que mostrar
+      model = Autores
+      fields = ['nombre', 'apellido', 'email', 'imagen']
+
+""" class ImagenForm(forms.ModelForm):
+    #Form for the image model
+    class Meta:
+        model = Imagen
+        fields = ['titulo', 'imagen']   """   
 
 
 class UserRegistrationForm(UserCreationForm):

@@ -1,16 +1,12 @@
 {% extends "AppBlog/padre.html" %}
 {% load static %}
 {% block section_name %}
-<h3>Recetas</h3>
+<h3>Editar perfil</h3>
 {% endblock %}
 {% block contenidoQueCambia %}
 <form method="POST">{% csrf_token %}
-  <h1>Edita la receta</h1>
+  <h1>Editar perfil de {{usuario}}</h1>
   {{ form.as_p }}
-  
-  <input type="submit" value="Enviar">
+  <button type="submit" value="Enviar">Enviar</button>
 </form>
-
-
 {% endblock %}
-
