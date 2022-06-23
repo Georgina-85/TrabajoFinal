@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
 
 # Application definition
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'AppBlog',
     'ckeditor',
     'widget_tweaks',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -140,7 +143,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/AppBlog/login'
-LOGIN_REDIRECT_URL = reverse_lazy('inicio')
+LOGIN_REDIRECT_URL = '/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

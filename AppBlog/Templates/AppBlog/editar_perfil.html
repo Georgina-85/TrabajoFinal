@@ -5,8 +5,13 @@
 {% endblock %}
 {% block contenidoQueCambia %}
 <form method="POST">{% csrf_token %}
-  <h1>Editar perfil de {{usuario}}</h1>
+  <h1>Editar perfil de {{user}}</h1>
   {{ form.as_p }}
-  <button type="submit" value="Enviar">Enviar</button>
+  <button type="submit" value="Enviar">Guardar</button>
+
+ 
 </form>
+
+<br/>
+<p><a href="{% url 'inicio' %}">Volver al inicio</a></p> 
 {% endblock %}

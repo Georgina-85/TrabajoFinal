@@ -25,11 +25,16 @@ urlpatterns = [
 
   path('nosotras/',views.nosotras, name = 'nosotras'),
  
-  path('login', views.login_request, name = 'Login'),
+  path('login/', views.login_request, name = 'Login'),
   path('registro', views.registro, name = 'Registro'),
   path('logout', LogoutView.as_view(template_name='AppBlog/logout.html'), name = 'Logout'),
 
-  path('editarPerfil', views.editarPerfil, name = "editarPerfil"),
+  path('editarPerfil', views.editarPerfil, name = 'editar_perfil'), 
+  path('perfil/', views.perfil, name="perfil"),
+  path('perfil_detail', views.perfil_detail, name = 'perfil_detail'),
+  #path('upload_avatar/', views.upload_avatar, name="upload_avatar"),
+ 
+  
   
 
 ]

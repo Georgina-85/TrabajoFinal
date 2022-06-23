@@ -1,9 +1,9 @@
 from django.shortcuts import render, HttpResponse
 from django.template import loader
 from django.http import HttpResponse
-from AppBlog.models import *
+from .models import *
 from django.views.generic import ListView, TemplateView
-from AppBlog.forms import UserRegistrationForm, UserEditForm
+from AppBlog.forms import *
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -16,19 +16,16 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # Create your views here.
+@login_required
 
-
-#class Inicio(ListView):
-    #def get(self, request, *args, **kwargs):
-        #posts = Posts.objects.all()
-        #return render(request, "AppBlog/inicio.html", {"posts": posts_list})
 
 def inicio(request):
     posts = Posts.objects.all
-    return render(request, "AppBlog/inicio.html", {"posts": posts})
+    return render(request, "AppBlog/inicio.html", {"posts": posts}) 
 
 
 def posts(request):
@@ -43,82 +40,103 @@ def nosotras(request):
     return render(request, "AppBlog/nosotras.html")    
 
 
-""" def image_upload_view(request):
-    #Process images uploaded by users
-    if request.method == 'POST':
-        form = ImagenForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            # Get the current instance object to display in the template
-            img_obj = form.instance
-            return render(request, 'posts.detail.html', {'form': form, 'img_obj': img_obj})
-    else:
-        form = ImagenForm()
-    return render(request, 'posts.detail.html', {'form': form}) """
-
-#def inicio(request):
-  #avatars = Avatar.objects.filter(user=request.user.id)
-  
-  #return render(request, 'appBlog/inicio.html', {'url': avatars[0].avatar.url})
-  # plantilla = loader.get_template('AppBlog/inicio.html')
-  # documento = plantilla.render()
-  # return HttpResponse(documento)    
 
 #Acá viene el LOGIN Y REGISTRO    
 
 def login_request(request):
-  if request.method == 'POST':
-    form = AuthenticationForm(request, data = request.POST)
-    
+  if  request.method == "POST":
+    form = AuthenticationForm(request, data=request.POST)
     if form.is_valid():
-      usuario = form.cleaned_data.get('username')
-      clave = form.cleaned_data.get('password')
-      
-      # Autenticación de usuario
-      user = authenticate(username=usuario, password=clave) # Si este usuario existe me lo trae
-     
-      if user is not None:
-        login(request,user) # Si existe, lo loguea
-        return render(request, 'AppBlog/inicio.html', {'mensaje': f'Bienvenido {usuario}'})
+      username = form.cleaned_data.get("username")
+      password = form.cleaned_data.get("password")
+      usuario = authenticate(username=username, password=password)
+      if usuario is not None:
+        login(request, usuario)
+        messages.success(request, f"Bienvenido {username}")
+        login(request, usuario)
+        return redirect('inicio')
       else:
-        return render(request, 'AppBlog/inicio.html', {'mensaje': 'Error, datos incorrectos'})
+        messages.error(request, "Los datos son incorrectos")
     else:
-        return render(request,'AppBlog/inicio.html', {'mensaje': 'Error, formulario erróneo'})
-  
-  form = AuthenticationForm() # Creo un formulario vacío si vengo por GET
-  return render(request, 'AppBlog/login.html', {'form':form})
+      messages.error(request, "Los datos son incorrectos")
+
+
+  form = AuthenticationForm()
+  return render(request, 'AppBlog/login.html', {'form': form})
+
+
 
 def registro(request):
+  data ={
+      'form' : UserRegistrationForm()
+  }
   if request.method == 'POST': # Si es POST, entonces es un formulario que viene lleno
     form = UserRegistrationForm(request.POST)
     if form.is_valid():
-      username = form.cleaned_data['username']
+      #username = form.cleaned_data['username']
       form.save()
-      return render(request, 'AppBlog/inicio.html', {'mensaje': f'Usuario {username} creado correctamente'})
-    else:
-      return render(request, 'AppBlog/inicio.html', {'mensaje': 'Error, no se pudo crear el usuario'})
-  else:
-    form = UserRegistrationForm()
-    return render(request, 'AppBlog/registro.html', {'form': form})
+      usuario = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+      login(request, usuario)
+      messages.success(request, f'{usuario} Te has registrado correctamente')
+      return redirect(to='inicio')
+    data['form'] = form
+  return render(request,'AppBlog/registro.html', data)
 
-@login_required
+
+@login_required()
 def editarPerfil(request):
-  usuario = request.user
 
-  if request.method == 'POST':
-    formulario = UserEditForm(request.POST, instance=usuario)
-    if formulario.is_valid():
-      informacion = formulario.cleaned_data
+    usuario = request.user
 
-      usuario.email = informacion['email']
-      usuario.password1 = informacion['password1']
-      usuario.password2 = informacion['password2']
-      usuario.save()
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
 
-      return render(request, 'AppBlog/inicio.html', {'usuario': usuario, 'mensaje': 'Datos actualizados correctamente'})
-  else:
-    formulario = UserEditForm(initial={'email':usuario.email})
-  return render(request, 'AppBlog/editarPerfil.html', {'formulario': formulario, 'usuario': usuario.username}) 
+        if form.is_valid():
+            data = form.cleaned_data
+            usuario.first_name = data["first_name"]
+            usuario.last_name=data["last_name"]
+            usuario.email = data["email"]
+            usuario.password1 = data["password1"]
+            usuario.password2 = data["password2"]
+            usuario.save()
+            return redirect("inicio")
+            messages.success(request, "El perfil fue editado correctamente")
+        else:
+           
+         
+          form = UserEditForm(initial={"email":usuario.email})
+        return render(request, 'AppBlog/editar_perfil.html', {"title": "Editar usuario", "message": "Editar usuario", "form": form, "errors": ["Datos inválidos"]}) 
+    
+    else:
+        form = UserEditForm(initial={"email":usuario.email})
+        return render(request, 'AppBlog/editar_perfil.html', {"title": "Editar usuario", "message": "Editar usuario", "form": form})
+
+""" @login_required()
+def perfil(request):
+    perfil_list = Perfil.objects.all
+    return render(request, 'AppBlog/perfil.html', {'perfil': perfil_list}) """
+
+def perfil(request):
+    return render(request, 'AppBlog/perfil.html')    
+
+def perfil_detail(request):
+    return render(request, "AppBlog/perfil_detail.html")
+
+""" def upload_avatar(request):   
+        
+    if request.method == "POST":
+        formulario = AvatarForm(request.POST,request.FILES)
+        if formulario.is_valid():
+
+            usuario = User.objects.get(username=request.user)
+            avatar = Avatar.objects.filter(user=usuario, imagen=formulario.cleaned_data['imagen'])
+            avatar.save()
+               
+            return redirect("inicio")
+    else:
+
+        formulario = AvatarForm()
+        return render(request, "AppBlog/upload_avatar.html", {"formulario": formulario})     """
 
   #CRUD
 
@@ -127,6 +145,8 @@ class PostsList(ListView):
 
     model = Posts
     template_name = "AppBlog/posts_list.html"
+    
+
 
 class PostDetail(DetailView):
 
@@ -137,7 +157,7 @@ class PostDetail(DetailView):
 class PostCreate(CreateView):
 
     model = Posts
-    success_url = reverse_lazy('posts_lista') # Redirecciono a la vista de posts luego de crear un post
+    success_url = reverse_lazy('posts_lista')  # Redirecciono a la vista de posts luego de crear un post
     fields = ['titulo', 'subtitulo', 'cuerpo', 'autor', 'fecha', 'imagen']
 
 
@@ -151,6 +171,7 @@ class PostDelete(DeleteView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')
+    
 
 
 class AutoresList(ListView):
@@ -167,6 +188,7 @@ class AutoresCreate(CreateView):
 
     model = Autores
     success_url = reverse_lazy('autores_lista') # Redirecciono a la vista de autores luego de crear un autor
+    
     fields = ['nombre', 'apellido', 'email', 'imagen']
 
 class AutoresUpdate(UpdateView):
