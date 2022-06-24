@@ -32,8 +32,7 @@ urlpatterns = [
   path('editarPerfil', views.editarPerfil, name = 'editar_perfil'), 
   path('perfil/', views.perfil, name="perfil"),
   path('perfil_detail', views.perfil_detail, name = 'perfil_detail'),
-  #path('upload_avatar/', views.upload_avatar, name="upload_avatar"),
- 
+  
   
   
 

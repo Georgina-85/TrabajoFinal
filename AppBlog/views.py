@@ -122,21 +122,7 @@ def perfil(request):
 def perfil_detail(request):
     return render(request, "AppBlog/perfil_detail.html")
 
-""" def upload_avatar(request):   
-        
-    if request.method == "POST":
-        formulario = AvatarForm(request.POST,request.FILES)
-        if formulario.is_valid():
 
-            usuario = User.objects.get(username=request.user)
-            avatar = Avatar.objects.filter(user=usuario, imagen=formulario.cleaned_data['imagen'])
-            avatar.save()
-               
-            return redirect("inicio")
-    else:
-
-        formulario = AvatarForm()
-        return render(request, "AppBlog/upload_avatar.html", {"formulario": formulario})     """
 
   #CRUD
 

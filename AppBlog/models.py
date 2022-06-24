@@ -36,29 +36,17 @@ class Autores(models.Model):
     def __str__(self): 
         return f"{self.nombre}  {self.apellido} - {self.email}"  
 
-""" class Avatar(models.Model):
-  user = models.ForeignKey(User, on_delete=models.CASCADE)
-  imagen = models.ImageField(upload_to='avatars', blank=True, null=True)
-
-  class Meta:
-        verbose_name_plural = "Avatars"
-        verbose_name = "Avatar"
-
-  def __str__(self): 
-       return f"{self.user}"  """
-
-
 
 
 class Perfil(models.Model):
     nombre = models.CharField(max_length=40)  
     apellido = models.CharField(max_length=40)
     email = models.EmailField()
-    avatar = models.ImageField(upload_to= 'avatars', blank = True, null= False)
+    
     
     class Meta:
         verbose_name_plural = "Perfiles"
         verbose_name = "Perfil"
 
     def __str__(self): 
-        return f"{self.nombre}  {self.apellido} - {self.email} {self.avatar}"   
+        return f"{self.nombre}  {self.apellido} - {self.email}"   
