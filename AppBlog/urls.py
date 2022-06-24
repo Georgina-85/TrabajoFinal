@@ -1,6 +1,6 @@
 from django.urls import path
 from AppBlog import views
-from AppBlog.views import *
+from .views import *
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -43,7 +43,7 @@ if settings.DEBUG:
         urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 else:
-        urlpatterns += staticfiles_urlpatterns()        
+        urlpatterns += staticfiles_urlpatterns()   
 
 
 

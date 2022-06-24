@@ -20,7 +20,7 @@ from django.contrib import messages
 
 
 # Create your views here.
-@login_required
+
 
 
 def inicio(request):

@@ -21,13 +21,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     
-                              
+                            
                         <li class="nav-item"><a class="nav-link" href="{% url 'nosotras' %}">Sobre nosotras</a></li>
                         
                         {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'posts_lista' %}">Recetas</a></li>
-                                  
-                            <li class="nav-item"><a class="nav-link" href="{% url 'autores_lista' %}">Autores</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'posts_lista' %}">Recetas</a></li>                                  
+                            <li class="nav-item"><a class="nav-link" href="{% url 'autores_lista' %}">Autores</a></li>                             
                             <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar sesión</a></li>
                             <a href="{% url 'perfil' %}">Hola {{user.username}}</a>
                         
