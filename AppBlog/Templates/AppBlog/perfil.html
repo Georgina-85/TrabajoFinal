@@ -6,11 +6,21 @@
 {% block contenidoQueCambia %}
 <h1>Perfil de {{user}}</h1>
 
-{% for user in object_list %}
-
-    <li>{{user}}</li>
-{% endfor %}
-       
+<div class="card mb-4">
+  
+    <div class="card-body">
+        {% if user.is_authenticated %}
+     
+        <li>Nombre: {{user.first_name}}</li>
+        <li>Apellido: {{user.last_name}}</li>
+        <li>Email: {{user.email}}</li>
+   
+   {% endif %} 
+   </ul>       
+   
+  
+    </div>
+  </div>  
 
 
 <p>

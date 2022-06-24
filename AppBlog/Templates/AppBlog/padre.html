@@ -28,12 +28,12 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'posts_lista' %}">Recetas</a></li>
                                   
                             <li class="nav-item"><a class="nav-link" href="{% url 'autores_lista' %}">Autores</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar sesión</a></li>
                             <a href="{% url 'perfil' %}">Hola {{user.username}}</a>
                         
                         {% else %}
 
-                            <a class="btn btn-primary" href="{% url 'Login' %}">Login</a>
+                            <a class="btn btn-primary" href="{% url 'Login' %}">Iniciar sesión</a>
                              <!-- <a class="btn btn-primary" href="{% url 'Registro' %}">Registrate</a> --> 
                         {% endif %}
         

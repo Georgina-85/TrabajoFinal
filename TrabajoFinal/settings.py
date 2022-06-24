@@ -63,7 +63,7 @@ ROOT_URLCONF = 'TrabajoFinal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/Users/georg/OneDrive/Documentos/Python/TrabajoFinal/TrabajoFinal/AppBlog/Templates/'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
