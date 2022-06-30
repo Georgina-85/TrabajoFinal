@@ -147,18 +147,15 @@ class PostCreate(CreateView):
     fields = ['titulo', 'subtitulo', 'cuerpo', 'autor', 'fecha', 'imagen']
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')
     fields = ['titulo', 'subtitulo', 'cuerpo']
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user():
-            return redirect('inicio')
-        return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+  
 
-class PostDelete(DeleteView):
+class PostDelete(LoginRequiredMixin, DeleteView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')
