@@ -153,10 +153,20 @@ class PostUpdate(UpdateView):
     success_url = reverse_lazy('posts_lista')
     fields = ['titulo', 'subtitulo', 'cuerpo']
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user():
+            return redirect('inicio')
+        return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+
 class PostDelete(DeleteView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user():
+            return redirect('inicio')
+        return super(PostDelete, self).dispatch(request, *args, **kwargs)
     
 
 

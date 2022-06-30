@@ -23,10 +23,15 @@
                     
                             
                         <li class="nav-item"><a class="nav-link" href="{% url 'nosotras' %}">Sobre nosotras</a></li>
-                        
+                        {% if perms.AppBlog.change_Posts %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'posts_lista' %}">Recetas</a></li>
+                        {% endif %}    
+                        {% if perms.AppBlog.change_Autores %}                              
+                            <li class="nav-item"><a class="nav-link" href="{% url 'autores_lista' %}">Autores</a></li>
+                        {% endif %}
+                         
                         {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'posts_lista' %}">Recetas</a></li>                                  
-                            <li class="nav-item"><a class="nav-link" href="{% url 'autores_lista' %}">Autores</a></li>                             
+                                                         
                             <li class="nav-item"><a class="nav-link" href="{% url 'Logout' %}">Cerrar sesión</a></li>
                             <a href="{% url 'perfil' %}">Hola {{user.username}}</a>
                         

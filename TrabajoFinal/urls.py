@@ -9,7 +9,7 @@ from AppBlog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('AppBlog/', include('AppBlog.urls')),
+    path('', include('AppBlog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
       
 
