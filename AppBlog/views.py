@@ -140,7 +140,7 @@ class PostDetail(DetailView):
     template_name = "AppBlog/posts_detail.html"
 
 
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')  # Redirecciono a la vista de posts luego de crear un post
@@ -159,12 +159,8 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
     model = Posts
     success_url = reverse_lazy('posts_lista')
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user():
-            return redirect('inicio')
-        return super(PostDelete, self).dispatch(request, *args, **kwargs)
-    
+   
+       
 
 
 class AutoresList(ListView):
@@ -177,20 +173,20 @@ class AutoresDetail(DetailView):
     model = Autores
     template_name = "AppBlog/autores_detail.html"
 
-class AutoresCreate(CreateView):
+class AutoresCreate(LoginRequiredMixin, CreateView):
 
     model = Autores
     success_url = reverse_lazy('autores_lista') # Redirecciono a la vista de autores luego de crear un autor
     
     fields = ['nombre', 'apellido', 'email', 'imagen']
 
-class AutoresUpdate(UpdateView):
+class AutoresUpdate(LoginRequiredMixin, UpdateView):
 
     model = Autores
     success_url = reverse_lazy('autores_lista')
     fields = ['nombre', 'apellido', 'email']
 
-class AutoresDelete(DeleteView):
+class AutoresDelete(LoginRequiredMixin, DeleteView):
 
     model = Autores
     success_url = reverse_lazy('autores_lista')    

@@ -2,6 +2,8 @@ from django.urls import path
 from AppBlog import views
 from .views import *
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static
 

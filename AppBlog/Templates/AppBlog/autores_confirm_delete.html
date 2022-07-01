@@ -2,8 +2,19 @@
 {% load static %}
 {% block contenidoQueCambia %}
 <h1>Estos son los autores de las recetas del blog</h1>
-<form method="POST">{% csrf_token %}
-  <p>Estás seguro de eliminar el autor del post"{{object}}"</p>
+
+  <form method="POST">{% csrf_token %}
+  <p>Estás seguro de eliminar el autor del post "{{object}}"</p>
   <input type="submit" value="SI">
-</form>
+  
+  <a href="{% url 'autores_lista' %}" class = "btn btn-success"> No, volver al listado</a>
+ 
+  </form>  
+
+{% endif %}    
+      
+
+  
+
+
 {% endblock %}

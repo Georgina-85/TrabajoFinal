@@ -2,8 +2,18 @@
 {% load static %}
 {% block contenidoQueCambia %}
 <h1>Estas son las recetas</h1>
-<form method="POST">{% csrf_token %}
-  <p>Estás seguro de eliminar el post "{{object}}"</p>
-  <input type="submit" value="SI">
-</form>
+
+
+  <form method="POST">{% csrf_token %}
+    
+      <p>Estás seguro de eliminar el post "{{object}}"</p>
+      <input type="submit" value="SI">
+
+      
+      <a href="{% url 'posts_lista' %}" class = "btn btn-success"> No, volver al listado</a>
+     
+     
+     
+  </form>
+
 {% endblock %}
