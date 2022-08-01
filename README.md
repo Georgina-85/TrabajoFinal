@@ -2,7 +2,7 @@
 
 El siguiente blog fue realizado utilizando el framework de Django como proyecto final del curso de Python en CoderHouse.
 
-Autoras: Claudia Georgina Peragallo Sommer y Clara Cipresso
+Autora: Claudia Georgina Peragallo Sommer.
 
 Instrucciones de uso:
 <br/>
